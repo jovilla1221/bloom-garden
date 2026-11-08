@@ -1,1 +1,10 @@
 .vercel
+.env
+node_modules/
+.venv/
+venv/
+__pycache__/
+*.db-shm
+*.db-wal
+*.session
+*.log

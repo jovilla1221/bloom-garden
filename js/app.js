@@ -135,7 +135,7 @@ document.addEventListener('DOMContentLoaded', () => {
       flowers[i].update(time);
       flowers[i].draw(ctx, time);
     }
-    if (flowers.length > 300) flowers.shift();
+    if (flowers.length > 100) flowers.shift();
 
     window.particleSystem.update(window.innerWidth, window.innerHeight);
     window.particleSystem.draw(ctx);

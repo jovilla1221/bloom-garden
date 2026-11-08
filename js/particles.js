@@ -98,20 +98,22 @@ class ParticleSystem {
     for (const p of this.particles) {
       ctx.globalAlpha = Math.max(0, p.alpha);
       if (p.type === 'firefly') {
+        // Fast dual arc for glow instead of shadowBlur
         ctx.fillStyle = p.color;
-        ctx.shadowColor = p.color;
-        ctx.shadowBlur = 6;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.size * 1.8, 0, Math.PI * 2);
+        ctx.globalAlpha = Math.max(0, p.alpha * 0.25);
+        ctx.fill();
+
+        ctx.globalAlpha = Math.max(0, p.alpha);
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
         ctx.fill();
-        ctx.shadowBlur = 0;
       } else if (p.type === 'petal') {
         ctx.save();
         ctx.translate(p.x, p.y);
         ctx.rotate(p.rotation);
         ctx.fillStyle = p.color;
-        ctx.shadowColor = p.color;
-        ctx.shadowBlur = 3;
         ctx.beginPath();
         ctx.ellipse(0, 0, p.size, p.size * 0.5, 0, 0, Math.PI * 2);
         ctx.fill();

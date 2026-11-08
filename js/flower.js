@@ -169,8 +169,16 @@ class Flower {
     const currentRadius = this.radius * (0.15 + 0.85 * this.bloomProgress);
     const bloomPhase = this.bloomProgress;
 
-    ctx.shadowColor = 'rgba(255, 120, 150, 0.25)';
-    ctx.shadowBlur = 12 * bloomPhase;
+    // Fast ambient glow without costly canvas shadowBlur
+    if (bloomPhase > 0.1) {
+      const glowGrad = ctx.createRadialGradient(0, 0, currentRadius * 0.2, 0, 0, currentRadius * 1.3);
+      glowGrad.addColorStop(0, 'rgba(255, 180, 205, 0.25)');
+      glowGrad.addColorStop(1, 'rgba(255, 180, 205, 0)');
+      ctx.fillStyle = glowGrad;
+      ctx.beginPath();
+      ctx.arc(0, 0, currentRadius * 1.3, 0, Math.PI * 2);
+      ctx.fill();
+    }
 
     switch (this.species) {
       case 'lily':
